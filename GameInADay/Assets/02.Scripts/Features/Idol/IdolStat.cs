@@ -6,8 +6,8 @@ public struct HumanStat {
     public int Poten;
 
     public HumanStat(ModelIdol model) {
-        Current = Random.Range(model.CurMin, model.CurMax);
         Poten = Random.Range(model.PotenMin, model.PotenMax);
+        Current = Mathf.Min(Poten, Random.Range(model.CurMin, model.CurMax));
     }
 
     public override string ToString() {
@@ -21,6 +21,6 @@ public struct IdolStat {
     public Dictionary<IdolStatType, HumanStat> Stats;
 
     public override string ToString() {
-        return $"{Name} - {Grade} : {Stats}";
+        return $"{Name} - {Grade} : {Stats.GetString()}";
     }
 }

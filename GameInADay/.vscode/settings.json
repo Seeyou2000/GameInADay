@@ -57,5 +57,7 @@
         "temp/":true,
         "Temp/":true
     },
-    "omnisharp.enableRoslynAnalyzers": true
+    "omnisharp.enableRoslynAnalyzers": true,
+    "editor.indentSize": 4,
+    "editor.detectIndentation": false,
 }
