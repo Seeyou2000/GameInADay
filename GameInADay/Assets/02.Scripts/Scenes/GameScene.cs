@@ -11,6 +11,10 @@ public class GameScene : BaseScene
     private List<IdolStat> _currentIdols;
     private List<IdolStat> _tmpIdolStats;
 
+    public long Money;
+
+    public Simulator Simulator;
+    
     protected override void Init()
     {
         base.Init();
@@ -19,12 +23,18 @@ public class GameScene : BaseScene
 
         _currentIdols = new List<IdolStat>();
         _tmpIdolStats = new List<IdolStat>();
+        Simulator = new(this);
         
         _uiGame = Managers.UI.ShowSceneUI<UI_Game>();
         _uiGame.Init();
         _uiGame.localAuditionBtn.onClick.AddListener(() => { HavingAudition("LocalAudition"); });
         _uiGame.wideAreaAuditionBtn.onClick.AddListener(() => { HavingAudition("WideAreaAudition"); });
         _uiGame.nationalAuditionBtn.onClick.AddListener(() => { HavingAudition("NationalAudition"); });
+        _uiGame.PlayBtn.onClick.AddListener(() => Simulator.PlayNormal());
+        _uiGame.PauseBtn.onClick.AddListener(() => Simulator.Pause());
+        _uiGame.PlayDoubleBtn.onClick.AddListener(() => Simulator.PlayDouble());
+        _uiGame.SetMoney(Money);
+        _uiGame.SetDate(Simulator.DateString, 0f);
     }
 
     private void Update()
@@ -74,5 +84,12 @@ public class GameScene : BaseScene
     public override void Clear()
     {
         _tmpIdolStats.Clear();
+    }
+
+    void FixedUpdate() {
+        Simulator.OnFixedUpdate();
+
+        _uiGame.SetMoney(Money);
+        _uiGame.SetDate(Simulator.DateString, Simulator.DatePercentage);
     }
 }
