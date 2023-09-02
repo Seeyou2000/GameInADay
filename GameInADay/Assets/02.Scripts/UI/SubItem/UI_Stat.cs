@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class UI_Stat : UI_Base
@@ -16,7 +17,9 @@ public class UI_Stat : UI_Base
         Gage
     }
 
-    public TextMeshProUGUI name, point, potnential;
+    public TextMeshProUGUI name;
+    public TextMeshProUGUI current;
+    public TextMeshProUGUI potential;
 
     public override void Init()
     {
@@ -24,7 +27,13 @@ public class UI_Stat : UI_Base
         Bind<Image>(typeof(Images));
 
         name = GetTextMeshPro((int)Texts.Name);
-        point = GetTextMeshPro((int)Texts.Point);
-        potnential = GetTextMeshPro((int)Texts.Potential);
+        current = GetTextMeshPro((int)Texts.Point);
+        potential = GetTextMeshPro((int)Texts.Potential);
+    }
+
+    public void SetStat(HumanStat stat)
+    {
+        current.text = $"{stat.Current}";
+        potential.text = $"{stat.Poten}";
     }
 }
