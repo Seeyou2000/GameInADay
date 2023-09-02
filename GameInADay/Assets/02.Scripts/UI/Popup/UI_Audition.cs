@@ -34,6 +34,7 @@ public class UI_Audition : UI_Popup
     public override void Init()
     {
         base.Init();
+        if (IsBinded()) return;
         
         Bind<GameObject>(typeof(GameObjects));
         Bind<Button>(typeof(Buttons));
@@ -63,18 +64,16 @@ public class UI_Audition : UI_Popup
             cards[i] = Managers.UI.MakeSubItem<UI_IdolCard>(parent: cardGrid.transform);
             cards[i].Init();
         }
-        
-        GetButton((int)Buttons.GatchaBtn).onClick.AddListener(ShowIdol);
 
         passBtnText.color = Color.clear;
         passBtn.gameObject.BindEvent((evt) => { passBtnText.color = Color.black; },Define.UIEvent.PointerEnter);
         passBtn.gameObject.BindEvent((evt) => { passBtnText.color = Color.clear; },Define.UIEvent.PointerExit);
         finishBtn.onClick.AddListener(Managers.UI.ClosePopupUI);
+        
     }
 
-    public void ShowIdol()
+    public void ShowIdol(IdolStat idol)
     {
-        var idol = ModelIdol.GenerateIdol("LocalAudition");
         name.text = idol.Name;
         foreach (var i in System.Enum.GetValues(typeof(IdolStatType)))
         {

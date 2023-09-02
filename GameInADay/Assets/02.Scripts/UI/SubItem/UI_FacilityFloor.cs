@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UI_FacilityFloor : MonoBehaviour
+public class UI_FacilityFloor : UI_Base
 {
     public static readonly float Gap = 15f;
     public bool IsUnlocked = false;
@@ -14,8 +14,8 @@ public class UI_FacilityFloor : MonoBehaviour
     public Sprite UnlockedBackgroundSprite;
 
     private Image _backgroundImage;
-
-    void Awake()
+    
+    public override void Init()
     {
         _backgroundImage = GetComponent<Image>();
     }
@@ -33,8 +33,9 @@ public class UI_FacilityFloor : MonoBehaviour
 
         var emptyRoomImageWidth = EmptyRoomPrefab.GetComponent<Image>().sprite.bounds.size.x * 100;
 
-        for (int i = 0; i < Define.RoomCount; i++) {
-            var emptyRoomObject = Instantiate(EmptyRoomPrefab, transform);
+        for (int i = 0; i < Define.RoomCount; i++)
+        {
+            var emptyRoomObject = Managers.UI.MakeSubItem<UI_EmptyRoom>(parent: transform).GetComponent<Image>();
             emptyRoomObject.rectTransform.anchoredPosition = new(Gap + i * (emptyRoomImageWidth + Gap), 10);
         }
     }

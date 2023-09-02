@@ -3,7 +3,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class FacilityController : MonoBehaviour
+public class UI_Facility : UI_Base
 {
     public UI_FacilityFloor FloorPrefab;
 
@@ -12,12 +12,13 @@ public class FacilityController : MonoBehaviour
 
     private Dictionary<int, UI_FacilityFloor> _facilityFloors = new();
 
-    void Start()
+    public override void Init()
     {
         var image = FloorPrefab.GetComponent<Image>();
         for (int i = -6; i < 6; i++)
         {
-            var floor = Instantiate(FloorPrefab, transform);
+            var floor = Managers.UI.MakeSubItem<UI_FacilityFloor>(parent: transform);
+            floor.Init();
             floor.Init(i);
             if (i == 0) {
                 floor.Unlock();
@@ -51,7 +52,6 @@ public class FacilityController : MonoBehaviour
             }
             return true;
         }
-
         return false;
     }
 
