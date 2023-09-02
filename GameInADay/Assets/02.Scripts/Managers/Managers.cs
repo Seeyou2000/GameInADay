@@ -8,6 +8,12 @@ public class Managers : MonoBehaviour
     static Managers Instance { get { Init(); return s_instance; } } // 유일한 매니저를 갖고온다
 
 	#region Contents
+
+	private CoroutineManager _coroutine = new CoroutineManager();
+	private GameManager _game = new GameManager();
+	public static CoroutineManager Coroutine { get { return Instance._coroutine;  } }
+	public static GameManager Game { get { return Instance._game;  } }
+
 	#endregion
 
 	#region Core
@@ -53,6 +59,8 @@ public class Managers : MonoBehaviour
             s_instance._data.Init();
             s_instance._pool.Init();
             s_instance._sound.Init();
+            s_instance._coroutine.Init();
+            s_instance._game.Init();
         }		
 	}
 
