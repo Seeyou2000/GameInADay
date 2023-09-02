@@ -67,6 +67,17 @@ public class StaffPayJob : Job
     }
 }
 
+public class FacilityPayJob : Job
+{
+    public int FacilityID;
+
+    public FacilityPayJob(int facilityID) {
+        FacilityID = facilityID;
+        Recurring = true;
+        RequiredTime = 7 * 30;
+    }
+}
+
 public class WaitingAuditionJob : Job
 {
     public WaitingAuditionJob() {

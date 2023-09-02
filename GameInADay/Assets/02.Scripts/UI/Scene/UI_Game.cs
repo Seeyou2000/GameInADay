@@ -7,7 +7,7 @@ public class UI_Game : UI_Scene
 {
     private enum Buttons
     {
-        LocalAuditionBtn,WideAreaAuditionBtn,NationalAuditionBtn,PlayBtn,PauseBtn,PlayDoubleBtn,HireStaffBtn,StaffListBtn
+        LocalAuditionBtn,WideAreaAuditionBtn,NationalAuditionBtn,PlayBtn,PauseBtn,PlayDoubleBtn,HireStaffBtn,StaffListBtn,FacilityListBtn
     }
 
     private enum MainUIs
@@ -25,7 +25,7 @@ public class UI_Game : UI_Scene
         TimeGaugeBar
     }
 
-    public Button localAuditionBtn, wideAreaAuditionBtn, nationalAuditionBtn, PlayBtn, PauseBtn, PlayDoubleBtn, HireStaffBtn, StaffListBtn;
+    public Button localAuditionBtn, wideAreaAuditionBtn, nationalAuditionBtn, PlayBtn, PauseBtn, PlayDoubleBtn, HireStaffBtn, StaffListBtn, FacilityListBtn;
     public UI_Audition UIAudition;
     public UI_Facility UIFacility;
     public UI_MainTab UIMainTab = null;
@@ -47,6 +47,7 @@ public class UI_Game : UI_Scene
         nationalAuditionBtn = GetButton((int)Buttons.NationalAuditionBtn);
         HireStaffBtn = GetButton((int)Buttons.HireStaffBtn);
         StaffListBtn = GetButton((int)Buttons.StaffListBtn);
+        FacilityListBtn = GetButton((int)Buttons.FacilityListBtn);
         PlayBtn = GetButton((int)Buttons.PlayBtn);
         PauseBtn = GetButton((int)Buttons.PauseBtn);
         PlayDoubleBtn = GetButton((int)Buttons.PlayDoubleBtn);
@@ -58,6 +59,7 @@ public class UI_Game : UI_Scene
         localAuditionBtn.onClick.AddListener(ShowAudition);
         wideAreaAuditionBtn.onClick.AddListener(ShowAudition);
         nationalAuditionBtn.onClick.AddListener(ShowAudition);
+        FacilityListBtn.onClick.AddListener(ShowMainTab);
         HireStaffBtn.onClick.AddListener(ShowMainTab);
         StaffListBtn.onClick.AddListener(ShowMainTab);
     }

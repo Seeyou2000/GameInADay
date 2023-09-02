@@ -63,6 +63,19 @@ public class GameScene : BaseScene
             });
         });
 
+        _uiGame.FacilityListBtn.onClick.AddListener(() => {
+            _uiGame.UIMainTab.SetContent("시설", (content) => {
+                for (int i = 1; i < ModelAgencyFacilities.GetSize() + 1; i++)
+                {
+                    var facilityListItem = Managers.UI.MakeSubItem<UI_FacilityListItem>(content.transform);
+                    facilityListItem.Init();
+                    facilityListItem.SetFacility(i);
+
+                    facilityListItem.gameObject.BindEvent((evt) => { }, Define.UIEvent.Drag);
+                }
+            });
+        });
+
         _uiGame.SetMoney(Money);
         _uiGame.SetDate(Simulator.DateString, 0f);
     }

@@ -335,7 +335,7 @@ GameObject:
   - component: {fileID: 8937905838611579524}
   - component: {fileID: 2780359717386275850}
   m_Layer: 5
-  m_Name: FacilityBtn
+  m_Name: FacilityListBtn
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

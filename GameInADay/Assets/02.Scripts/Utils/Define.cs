@@ -29,6 +29,7 @@ public class Define
     {
         Click,
         Drag,
+        Drop,
         PointerEnter,
         PointerExit
     }
