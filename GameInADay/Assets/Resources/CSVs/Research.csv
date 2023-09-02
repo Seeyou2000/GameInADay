@@ -1,4 +1,4 @@
-ID,ResearchName,RequirePoint,PreferTeenage,PreferYouth,PreferAdult,PreferMan,PreferWoman,PreferLight,PreferManiac,IncreaseCDPriceRate,IncentiveProfit,GreatSuccessFanIncreaseRate,SuccessFanIncreaseRate,FailureFanIncreaseRate,BigFailureFanIncreaseRate,GreatSuccessProb,SuccessProb,FailureProb,BigFailureProb
+﻿ID,ResearchName,RequirePoint,PreferTeenage,PreferYouth,PreferAdult,PreferMan,PreferWoman,PreferLight,PreferManiac,IncreaseCDPriceRate,IncentiveProfit,GreatSuccessFanIncreaseRate,SuccessFanIncreaseRate,FailureFanIncreaseRate,BigFailureFanIncreaseRate,GreatSuccessProb,SuccessProb,FailureProb,BigFailureProb
 int,string,int,float,float,float,float,float,float,float,float,int,float,float,float,float,float,float,float,float
 10100,[싱글] 가사,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 10101,사랑,432,0,0,0,0,0,0.15,0.1,0,0,0,0,0,0,0,0,0,0
