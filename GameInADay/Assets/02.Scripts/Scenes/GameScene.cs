@@ -6,6 +6,7 @@ public class GameScene : BaseScene
 {
     private UI_ProducerName _producerNameUI;
     private UI_Audition _auditionUI;
+    
     protected override void Init()
     {
         base.Init();
@@ -19,7 +20,7 @@ public class GameScene : BaseScene
         _producerNameUI.nextBtn.onClick.AddListener(() => { Managers.UI.ClosePopupUI();
             _auditionUI = Managers.UI.ShowPopupUI<UI_Audition>();
             _auditionUI.Init();
-            _auditionUI.nextBtn.onClick.AddListener(() => { Managers.UI.ClosePopupUI();});
+            _auditionUI.finishBtn.onClick.AddListener(() => { Managers.UI.ClosePopupUI();});
             _auditionUI.redoBtn.onClick.AddListener(() =>
             {
                 Managers.UI.ClosePopupUI();

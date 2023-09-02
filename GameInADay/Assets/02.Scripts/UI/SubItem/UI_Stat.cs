@@ -1,15 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
-using UnityEngine;
-using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class UI_Stat : UI_Base
 {
     enum Texts
     {
-        Name,Point,Potential
+        Name,Current,Potential
     }
 
     enum Images
@@ -27,7 +23,7 @@ public class UI_Stat : UI_Base
         Bind<Image>(typeof(Images));
 
         name = GetTextMeshPro((int)Texts.Name);
-        current = GetTextMeshPro((int)Texts.Point);
+        current = GetTextMeshPro((int)Texts.Current);
         potential = GetTextMeshPro((int)Texts.Potential);
     }
 

@@ -1,19 +1,22 @@
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UI_Audition : UI_Popup
 {
     private enum Buttons
     {
-        NextBtn,
+        FinishBtn,
         RedoBtn,
-        GatchaBtn
+        GatchaBtn,
+        PassBtn
     }
 
     private enum Texts
     {
-        Name, Age
+        Name, Age, PassBtnText
     }
     
     enum GameObjects
@@ -24,14 +27,14 @@ public class UI_Audition : UI_Popup
     private const int StatMax = 8;
     private UI_Stat[] stats;
     public GameObject statGrid;
-    public Button nextBtn,redoBtn;
-    public TextMeshProUGUI name, age;
+    public Button finishBtn,redoBtn, passBtn;
+    public TextMeshProUGUI name, age, passBtnText;
+    private Dictionary<int, string> IntToName = new(){{0,"귀여움"}, {1,"쿨"}, {2,"섹시"}, {3,"아름다움"}, {4,"보컬"}, {5,"댄스"}, {6,"유머"}, {7,"지성"}};
 
     public override void Init()
     {
         base.Init();
-
-        if (nextBtn != null) return;
+        
         Bind<GameObject>(typeof(GameObjects));
         Bind<Button>(typeof(Buttons));
         Bind<TextMeshProUGUI>(typeof(Texts));
@@ -42,13 +45,21 @@ public class UI_Audition : UI_Popup
         for (var i = 0; i < statsLength; i++)
         {
             stats[i] = Managers.UI.MakeSubItem<UI_Stat>(parent: statGrid.transform);
+            stats[i].Init();
+            stats[i].name.text = IntToName[i];
         }
         
-        nextBtn = GetButton((int)Buttons.NextBtn);
+        finishBtn = GetButton((int)Buttons.FinishBtn);
         redoBtn = GetButton((int)Buttons.RedoBtn);
+        passBtn = GetButton((int)Buttons.PassBtn);
         name = GetTextMeshPro((int)Texts.Name);
         age = GetTextMeshPro((int)Texts.Age);
+        passBtnText = GetTextMeshPro((int)Texts.PassBtnText);
         GetButton((int)Buttons.GatchaBtn).onClick.AddListener(Gatcha);
+
+        passBtnText.color = Color.clear;
+        passBtn.gameObject.BindEvent((evt) => { passBtnText.color = Color.black; },Define.UIEvent.PointerEnter);
+        passBtn.gameObject.BindEvent((evt) => { passBtnText.color = Color.clear; },Define.UIEvent.PointerExit);
     }
 
     public void Gatcha()
@@ -58,9 +69,8 @@ public class UI_Audition : UI_Popup
         name.text = idol.Name;
         foreach (var i in System.Enum.GetValues(typeof(IdolStatType)))
         {
-            var index = (int)i - 1;
-            stats[index].name.text = System.Enum.GetName(typeof(IdolStatType), i);
-            stats[index].SetStat(idol.Stats[(IdolStatType)i]);
+            var idx = (int)i - 1;
+            stats[idx].SetStat(idol.Stats[(IdolStatType)i]);
         }
     }
 }

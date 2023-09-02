@@ -13,7 +13,8 @@ public abstract class UI_Base : MonoBehaviour
 
 	private void Start()
 	{
-		Init();
+		if(_objects.Count == 0)
+			Init();
 	}
 
 	protected void Bind<T>(Type type) where T : UnityEngine.Object
@@ -62,6 +63,14 @@ public abstract class UI_Base : MonoBehaviour
 			case Define.UIEvent.Drag:
 				evt.OnDragHandler -= action;
 				evt.OnDragHandler += action;
+				break;
+			case Define.UIEvent.PointerEnter:
+				evt.OnPointerEnterHandler -= action;
+				evt.OnPointerEnterHandler += action;
+				break;
+			case Define.UIEvent.PointerExit:
+				evt.OnPointerExitHandler -= action;
+				evt.OnPointerExitHandler += action;
 				break;
 		}
 	}
