@@ -9,7 +9,8 @@ public partial class TableManager
 	{
 		if (!IsLoaded)
 		{
-			ModelSample.Load();
+			ModelAgencyFacilities.Load();
+			ModelIdol.Load();
 			IsLoaded = true;
 		}
 	}
