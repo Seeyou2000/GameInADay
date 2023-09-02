@@ -1,5 +1,7 @@
 using System;
+using System.Collections.Generic;
 using System.Globalization;
+using Unity.Jobs;
 using UnityEngine;
 
 public class Simulator
@@ -8,6 +10,7 @@ public class Simulator
     public readonly int DayDuration = 30;
     public string DateString => _calendar.AddDays(RealStartedDate, ElapsedTime / DayDuration).ToString("yyyy/MM/dd");
     public float DatePercentage => (float)(ElapsedTime % DayDuration) / DayDuration;
+    public int ElpasedDay => ElapsedTime / DayDuration;
     public bool Enabled = true;
     public float SpeedMultiplier = 1f;
     public DateTime RealStartedDate;
@@ -16,6 +19,8 @@ public class Simulator
     private Calendar _calendar;
 
     private GameScene _gameScene;
+    
+    public List<Job> Jobs = new();
 
     public Simulator(GameScene gameScene)
     {
@@ -48,9 +53,18 @@ public class Simulator
         Enabled = false;
     }
 
+    public void AddJob(Job job) {
+        Jobs.Add(job);
+    }
+
     private void Simulate()
     {
         ElapsedTime++;
+        foreach(var job in Jobs) {
+            job.Process();
+        }
+
+        Jobs.RemoveAll(job => job.Finished);
     }
 
     public void OnFixedUpdate()

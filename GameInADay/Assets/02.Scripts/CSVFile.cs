@@ -38,4 +38,9 @@ public class CSVFile<_T>
     {
         return _map.Count;
     }
+
+    public static _T GetRandom(int startIndex = 1)
+    {
+        return Get(UnityEngine.Random.Range(startIndex, GetSize()));
+    }
 }

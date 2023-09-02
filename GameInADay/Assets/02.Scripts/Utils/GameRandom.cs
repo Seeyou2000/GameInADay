@@ -31,4 +31,16 @@ public static class GameRandom
 
         return idolIndex;
     }
+
+    public static Staff Staff()
+    {
+        var grade = ModelStaffGrade.GetRandom();
+        var type = ModelStaffInfo.GetRandom(2);
+        return new Staff {
+            Name = IdolNameGenerator.Generate(),
+            PayPerWeek = grade.Pay,
+            GradeId = grade.ID,
+            Type = type.Staff,
+        };
+    }
 }

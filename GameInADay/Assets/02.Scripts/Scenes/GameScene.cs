@@ -12,6 +12,8 @@ public class GameScene : BaseScene
     private List<IdolStat> _tmpIdolStats;
 
     public long Money;
+    public List<Staff> Staffs = new();
+    public int ResearchPoint;
 
     public Simulator Simulator;
     
@@ -33,6 +35,34 @@ public class GameScene : BaseScene
         _uiGame.PlayBtn.onClick.AddListener(() => Simulator.PlayNormal());
         _uiGame.PauseBtn.onClick.AddListener(() => Simulator.Pause());
         _uiGame.PlayDoubleBtn.onClick.AddListener(() => Simulator.PlayDouble());
+
+        _uiGame.HireStaffBtn.onClick.AddListener(() => {
+            _uiGame.UIMainTab.SetContent("스태프 고용", (content) => {
+                for (int i = 0; i < 10; i++)
+                {
+                    var newStaff = GameRandom.Staff();
+                    var staffListItem = Managers.UI.MakeSubItem<UI_HireStaffListItem>(content.transform);
+                    staffListItem.Init();
+                    staffListItem.SetStaff(newStaff);
+                    staffListItem.HireBtn.onClick.AddListener(() => {
+                        HireStaff(newStaff);
+                        Destroy(staffListItem.gameObject);
+                    });
+                }
+            });
+        });
+
+        _uiGame.StaffListBtn.onClick.AddListener(() => {
+            _uiGame.UIMainTab.SetContent("스태프 목록", (content) => {
+                foreach (var staff in Staffs)
+                {
+                    var staffListItem = Managers.UI.MakeSubItem<UI_StaffListItem>(content.transform);
+                    staffListItem.Init();
+                    staffListItem.SetStaff(staff);
+                }
+            });
+        });
+
         _uiGame.SetMoney(Money);
         _uiGame.SetDate(Simulator.DateString, 0f);
     }
@@ -79,6 +109,31 @@ public class GameScene : BaseScene
             _currentIdols.Add(_tmpIdolStats[_uiGame.UIAudition.currendIdx]);
             Managers.Resource.Destroy(_uiGame.UIAudition.cards[_uiGame.UIAudition.currendIdx].gameObject);
         });
+    }
+
+    public void HireStaff(Staff staff)
+    {
+        Staffs.Add(staff);
+        var workJob = new StaffWorkJob(staff);
+        workJob.OnEnd = () => {
+            ResearchPoint += staff.Grade.ResearchPoint;
+        };
+        Simulator.AddJob(workJob);
+
+        var payJob = new StaffPayJob(staff);
+        payJob.OnEnd = () => {
+            Pay(staff.PayPerWeek);
+        };
+        Simulator.AddJob(payJob);
+    }
+
+    public bool Pay(int price)
+    {
+        if (Money < price) {
+            return false;
+        }
+        Money -= price;
+        return true;
     }
 
     public override void Clear()

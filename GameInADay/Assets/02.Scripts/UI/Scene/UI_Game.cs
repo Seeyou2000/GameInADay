@@ -7,7 +7,7 @@ public class UI_Game : UI_Scene
 {
     private enum Buttons
     {
-        LocalAuditionBtn,WideAreaAuditionBtn,NationalAuditionBtn,PlayBtn,PauseBtn,PlayDoubleBtn
+        LocalAuditionBtn,WideAreaAuditionBtn,NationalAuditionBtn,PlayBtn,PauseBtn,PlayDoubleBtn,HireStaffBtn,StaffListBtn
     }
 
     private enum MainUIs
@@ -25,9 +25,10 @@ public class UI_Game : UI_Scene
         TimeGaugeBar
     }
 
-    public Button localAuditionBtn, wideAreaAuditionBtn, nationalAuditionBtn, PlayBtn, PauseBtn, PlayDoubleBtn;
+    public Button localAuditionBtn, wideAreaAuditionBtn, nationalAuditionBtn, PlayBtn, PauseBtn, PlayDoubleBtn, HireStaffBtn, StaffListBtn;
     public UI_Audition UIAudition;
     public UI_Facility UIFacility;
+    public UI_MainTab UIMainTab = null;
     public TextMeshProUGUI MoneyText;
     public TextMeshProUGUI DateText;
     public Image TimeGaugeBar;
@@ -44,6 +45,8 @@ public class UI_Game : UI_Scene
         localAuditionBtn = GetButton((int)Buttons.LocalAuditionBtn);
         wideAreaAuditionBtn = GetButton((int)Buttons.WideAreaAuditionBtn);
         nationalAuditionBtn = GetButton((int)Buttons.NationalAuditionBtn);
+        HireStaffBtn = GetButton((int)Buttons.HireStaffBtn);
+        StaffListBtn = GetButton((int)Buttons.StaffListBtn);
         PlayBtn = GetButton((int)Buttons.PlayBtn);
         PauseBtn = GetButton((int)Buttons.PauseBtn);
         PlayDoubleBtn = GetButton((int)Buttons.PlayDoubleBtn);
@@ -55,6 +58,8 @@ public class UI_Game : UI_Scene
         localAuditionBtn.onClick.AddListener(ShowAudition);
         wideAreaAuditionBtn.onClick.AddListener(ShowAudition);
         nationalAuditionBtn.onClick.AddListener(ShowAudition);
+        HireStaffBtn.onClick.AddListener(ShowMainTab);
+        StaffListBtn.onClick.AddListener(ShowMainTab);
     }
 
     public void ShowAudition()
@@ -63,9 +68,16 @@ public class UI_Game : UI_Scene
         UIAudition.Init();
     }
 
+    public void ShowMainTab()
+    {
+        if (UIMainTab == null) {
+            UIMainTab = Managers.UI.ShowPopupUI<UI_MainTab>();
+        }
+    }
+
     public void SetMoney(long money)
     {
-        MoneyText.text = $"$ {money}";
+        MoneyText.text = $"₩ {money}";
     }
 
     public void SetDate(string dateString, float datePercentage)
