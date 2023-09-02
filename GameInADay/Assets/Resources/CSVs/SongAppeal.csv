@@ -1,0 +1,9 @@
+ID,PublicType,AppealRate
+int,string,float
+1,Teenage,0.1
+2,Youth,0
+3,Adult,0
+4,Man,0.1
+5,Woman,0
+6,Light,-0.3
+7,Maniac,0.5

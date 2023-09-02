@@ -12,6 +12,8 @@ public partial class TableManager
 			ModelAgencyFacilities.Load();
 			ModelAudition.Load();
 			ModelIdol.Load();
+			ModelResearch.Load();
+			ModelSongAppeal.Load();
 			IsLoaded = true;
 		}
 	}
