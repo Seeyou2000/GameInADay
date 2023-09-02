@@ -8,28 +8,21 @@ public class UI_Audition : UI_Popup
 {
     private enum Buttons
     {
-        FinishBtn,
-        GatchaBtn,
-        PassBtn
-    }
-
-    private enum Texts
-    {
-        Name, Age, PassBtnText
+        FinishBtn
     }
     
     enum GameObjects
     {
-        StatGrid, CardGrid
+        Pane, CardGrid
     }
 
     private const int StatMax = 8;
-    private UI_Stat[] stats;
+
+    public int currendIdx;
     public UI_IdolCard[] cards;
-    public GameObject statGrid, cardGrid;
-    public Button finishBtn, passBtn;
-    public TextMeshProUGUI name, age, passBtnText;
-    private Dictionary<int, string> IntToName = new(){{0,"귀여움"}, {1,"쿨"}, {2,"섹시"}, {3,"아름다움"}, {4,"보컬"}, {5,"댄스"}, {6,"유머"}, {7,"지성"}};
+    public UI_StatPane statPane;
+    public GameObject pane, cardGrid;
+    public Button finishBtn;
 
     public override void Init()
     {
@@ -38,47 +31,41 @@ public class UI_Audition : UI_Popup
         
         Bind<GameObject>(typeof(GameObjects));
         Bind<Button>(typeof(Buttons));
-        Bind<TextMeshProUGUI>(typeof(Texts));
-
-        statGrid = GetObject((int)GameObjects.StatGrid);
-        cardGrid = GetObject((int)GameObjects.CardGrid);
-        finishBtn = GetButton((int)Buttons.FinishBtn);
-        passBtn = GetButton((int)Buttons.PassBtn);
-        name = GetTextMeshPro((int)Texts.Name);
-        age = GetTextMeshPro((int)Texts.Age);
-        passBtnText = GetTextMeshPro((int)Texts.PassBtnText);
         
-        var statsLength = System.Enum.GetValues(typeof(IdolStatType)).Length;
-        stats = new UI_Stat[statsLength];
-        for (var i = 0; i < statsLength; i++)
-        {
-            stats[i] = Managers.UI.MakeSubItem<UI_Stat>(parent: statGrid.transform);
-            stats[i].Init();
-            stats[i].name.text = IntToName[i];
-        }
+        cardGrid = GetObject((int)GameObjects.CardGrid);
+        pane = GetObject((int)GameObjects.Pane);
+        finishBtn = GetButton((int)Buttons.FinishBtn);
+        statPane = Managers.UI.MakeSubItem<UI_StatPane>(parent: pane.transform );
+        statPane.Init();
+        statPane.transform.localPosition = Vector3.zero;
 
-
-        cards = new UI_IdolCard[5];
-        for (var i = 0; i < 5; i++)
+        cards = new UI_IdolCard[Define.MaxAuditionCount];
+        for (var i = 0; i < Define.MaxAuditionCount; i++)
         {
             cards[i] = Managers.UI.MakeSubItem<UI_IdolCard>(parent: cardGrid.transform);
             cards[i].Init();
         }
-
-        passBtnText.color = Color.clear;
-        passBtn.gameObject.BindEvent((evt) => { passBtnText.color = Color.black; },Define.UIEvent.PointerEnter);
-        passBtn.gameObject.BindEvent((evt) => { passBtnText.color = Color.clear; },Define.UIEvent.PointerExit);
-        finishBtn.onClick.AddListener(Managers.UI.ClosePopupUI);
         
+        finishBtn.onClick.AddListener(Managers.UI.ClosePopupUI);
+        ClosePane();
     }
 
-    public void ShowIdol(IdolStat idol)
+    public void ShowIdol(int idx, IdolStat idol)
     {
-        name.text = idol.Name;
-        foreach (var i in System.Enum.GetValues(typeof(IdolStatType)))
-        {
-            var idx = (int)i - 1;
-            stats[idx].SetStat(idol.Stats[(IdolStatType)i]);
-        }
+        currendIdx = idx;
+        ShowPane();
+        statPane.SetIdol(idol);
+    }
+    
+    public void ShowPane()
+    {
+        pane.SetActive(true);
+        statPane.passBtnText.color = Color.clear;
+    }
+    
+    public void ClosePane()
+    {
+        pane.SetActive(false);
+        statPane.passBtnText.color = Color.clear;
     }
 }

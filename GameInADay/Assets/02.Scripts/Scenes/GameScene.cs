@@ -37,6 +37,9 @@ public class GameScene : BaseScene
             List<RaycastResult> raycastResults = new();
             currentEventSystem.RaycastAll(eventData, raycastResults);
             Debug.Log(raycastResults[0]);
+            
+            foreach(var c in _currentIdols)
+                Debug.Log(c.Name);
         }
     }
 
@@ -48,9 +51,24 @@ public class GameScene : BaseScene
         for (var idx = 0; idx < Define.MaxAuditionCount; idx++)
         {
             var point = _tmpIdolStats[idx].Stats.Sum(x => x.Value.Current) / 8;
+            var tmpIdx = idx;
+            
             _uiGame.UIAudition.cards[idx].SetPoint(point);
-            _uiGame.UIAudition.cards[idx].background.gameObject.BindEvent((evt) => { _uiGame.UIAudition.ShowIdol(_tmpIdolStats[idx]);}, Define.UIEvent.PointerEnter);
+            _uiGame.UIAudition.cards[idx].gameObject.BindEvent((evt) => { _uiGame.UIAudition.ShowIdol(tmpIdx, _tmpIdolStats[tmpIdx]);});
+            _uiGame.UIAudition.cards[idx].passBtn.onClick.AddListener(() =>
+            {
+                _currentIdols.Add(_tmpIdolStats[tmpIdx]);
+                Managers.Resource.Destroy(_uiGame.UIAudition.cards[tmpIdx].gameObject);
+                if(tmpIdx == _uiGame.UIAudition.currendIdx)
+                    _uiGame.UIAudition.ClosePane();
+            });
         }
+        _uiGame.UIAudition.statPane.passBtn.onClick.AddListener(() =>
+        {
+            _uiGame.UIAudition.ClosePane();
+            _currentIdols.Add(_tmpIdolStats[_uiGame.UIAudition.currendIdx]);
+            Managers.Resource.Destroy(_uiGame.UIAudition.cards[_uiGame.UIAudition.currendIdx].gameObject);
+        });
     }
 
     public override void Clear()
