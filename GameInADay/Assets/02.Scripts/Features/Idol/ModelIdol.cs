@@ -3,9 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public partial class ModelIdol {
-    public static IdolStat GenerateIdol() {
-        // TODO: 확률 엑셀에 기입
-        var selected = Get(UnityEngine.Random.Range(1, GetSize() + 1));
+    public static IdolStat GenerateIdol(string auditionType) {
+        var selected = Get(GameRandom.IdolIndexFromAudition(auditionType));
 
         var stats = new Dictionary<IdolStatType, HumanStat>();
         foreach (IdolStatType s in Enum.GetValues(typeof(IdolStatType))) {
