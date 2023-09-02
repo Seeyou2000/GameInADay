@@ -1,8 +1,8 @@
 @echo off
 
 set "inputDirectory=Design\Tables"
-set "outputDirectory=%PlumPuzzle\Assets\Resources\CSVs"
-set "outputClassDirectory=%PlumPuzzle\Assets\02.Scripts\Model"
+set "outputDirectory=%GameInADay\Assets\Resources\CSVs"
+set "outputClassDirectory=%GameInADay\Assets\02.Scripts\Model"
 set "converter=%ExcelToCsvConverter.vbs"
 set "converter2=%ConvertCSVToCSClass.exe"
 

@@ -1,4 +1,4 @@
-1. Design\Tagbles 안에 변환시킬 엑셀 파일 넣기
+1. Design\Tables 안에 변환시킬 엑셀 파일 넣기
 2. bat 실행시키기
 3. 만들어진 csv파일과 model class 확인하기
 
