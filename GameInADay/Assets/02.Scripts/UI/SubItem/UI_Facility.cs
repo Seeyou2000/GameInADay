@@ -21,25 +21,24 @@ public class UI_Facility : UI_Base
             floor.Init();
             floor.Init(i);
             if (i == 0) {
-                floor.Unlock();
+                floor.EnableUnlock();
             }
             // HACK
-            floor.GetComponent<RectTransform>().anchoredPosition = new (0, i * image.preferredHeight / 100);
+            // floor.GetComponent<RectTransform>().anchoredPosition = new (0, i * image.preferredHeight / 100);
+            var i1 = i;
+            floor.GetComponent<Button>().onClick.AddListener(() => { Unlock(i1); });
             _facilityFloors.Add(i, floor);
         }
+
+        Unlock(0);
     }
     
     public bool Unlock(int index)
     {
-        if (_unlockedFacilityIndex.Contains(index))
-        {
-            Debug.LogError("이미 열린 층을 다시 열려고 시도함. 이 메시지가 보이지 않아야 함.");
-            return false;
-        }
-        else if(CanUnlock(index))
+        if(CanUnlock(index))
         {
             _unlockedFacilityIndex.Add(index);
-            _facilityFloors[index].Unlock();
+            _facilityFloors[index].UnlockSelf();
 
             _facilityFloors.TryGetValue(index - 1, out var downFloor);
             if (downFloor != null) {
@@ -57,6 +56,9 @@ public class UI_Facility : UI_Base
 
     public bool CanUnlock(int index)
     {
-        return !_unlockedFacilityIndex.Contains(index) && (_unlockedFacilityIndex.Contains(index - 1) || _unlockedFacilityIndex.Contains(index + 1));
+        var isFirst = _unlockedFacilityIndex.Count == 0;
+        var notOpened = !_unlockedFacilityIndex.Contains(index);
+        var adjacentFloorOpened = _unlockedFacilityIndex.Contains(index - 1) || _unlockedFacilityIndex.Contains(index + 1);
+        return isFirst || (notOpened && adjacentFloorOpened);
     }
 }

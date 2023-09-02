@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,22 +15,46 @@ public class UI_FacilityFloor : UI_Base
     public Sprite UnlockedBackgroundSprite;
 
     private Image _backgroundImage;
+    private Button _button;
+    public TextMeshProUGUI ExpandText;
+
+    private enum Texts {
+        ExpandText
+    }
     
     public override void Init()
     {
+        Bind<TextMeshProUGUI>(typeof(Texts));
+
         _backgroundImage = GetComponent<Image>();
+        _button = GetComponent<Button>();
+
+        ExpandText = GetTextMeshPro((int)Texts.ExpandText);
     }
     
     public void Init(int index) {
         Index = index;
+
+        ExpandText.gameObject.SetActive(false);
+
+        _button.gameObject.BindEvent((evt) => {
+            if (!IsUnlockable || IsUnlocked) return;
+            ExpandText.gameObject.SetActive(true);
+        }, Define.UIEvent.PointerEnter);
+        _button.gameObject.BindEvent((evt) => {
+            if (!IsUnlockable || IsUnlocked) return;
+            ExpandText.gameObject.SetActive(false);
+        }, Define.UIEvent.PointerExit);
     }
 
-    public void Unlock() {
-        if (IsUnlocked) {
+    public void UnlockSelf() {
+        if (!IsUnlockable || IsUnlocked) {
             return;
         }
         IsUnlocked = true;
         _backgroundImage.sprite = UnlockedBackgroundSprite;
+        ExpandText.gameObject.SetActive(false);
+        _button.enabled = false;
 
         var emptyRoomImageWidth = EmptyRoomPrefab.GetComponent<Image>().sprite.bounds.size.x * 100;
 
