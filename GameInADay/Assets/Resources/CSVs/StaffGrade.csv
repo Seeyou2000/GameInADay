@@ -1,0 +1,5 @@
+﻿ID,Grade,Pay,ResearchPoint,IncreaseAbility,RecoverStamina,UpdateTime
+int,string,int,int,int,int,int
+1,신입,200000,2,2,2,30
+2,프로,569000,3,3,3,23
+3,전문가,1000000,5,4,5,16

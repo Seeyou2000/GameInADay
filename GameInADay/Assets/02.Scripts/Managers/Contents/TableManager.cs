@@ -14,6 +14,8 @@ public partial class TableManager
 			ModelIdol.Load();
 			ModelResearch.Load();
 			ModelSongAppeal.Load();
+			ModelStaffGrade.Load();
+			ModelStaffInfo.Load();
 			IsLoaded = true;
 		}
 	}

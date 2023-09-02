@@ -1,0 +1,8 @@
+﻿ID,Staff,IsFire,IsPay
+int,String,bool,bool
+1,프로듀서,FALSE,FALSE
+2,댄스코치,TRUE,TRUE
+3,노래코치,TRUE,TRUE
+4,세일스매니저,TRUE,TRUE
+5,스타일리스트,TRUE,TRUE
+6,의사,TRUE,TRUE
