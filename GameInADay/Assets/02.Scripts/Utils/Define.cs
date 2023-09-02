@@ -32,4 +32,6 @@ public class Define
         PointerEnter,
         PointerExit
     }
+
+    public static readonly int RoomCount = 5;
 }
