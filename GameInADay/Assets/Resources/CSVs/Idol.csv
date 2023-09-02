@@ -1,6 +1,6 @@
-ID,Grade,Min,Max
-int,string,int,int
-1,normal,1,75
-2,silver,20,80
-3,gold,40,90
-4,platinum,60,99
+ID,Grade,CurMin,CurMax,PotenMin,PotenMax
+int,string,int,int,int,int
+1,normal,1,40,20,70
+2,silver,20,70,40,80
+3,gold,40,80,60,90
+4,platinum,60,95,80,99

@@ -6,9 +6,13 @@ public partial class ModelIdol : CSVFile<ModelIdol> {
 	
 	public string Grade { get; set; }
 	
-	public int Min { get; set; }
+	public int CurMin { get; set; }
 	
-	public int Max { get; set; }
+	public int CurMax { get; set; }
+	
+	public int PotenMin { get; set; }
+	
+	public int PotenMax { get; set; }
 	
 	public static void Load()
 	{
@@ -26,8 +30,10 @@ public partial class ModelIdol : CSVFile<ModelIdol> {
 			int idx = 0;
 			Tmp.ID = int.Parse(data[idx++]);
 			Tmp.Grade = data[idx++];
-			Tmp.Min = int.Parse(data[idx++]);
-			Tmp.Max = int.Parse(data[idx++]);
+			Tmp.CurMin = int.Parse(data[idx++]);
+			Tmp.CurMax = int.Parse(data[idx++]);
+			Tmp.PotenMin = int.Parse(data[idx++]);
+			Tmp.PotenMax = int.Parse(data[idx++]);
 			Tmp.Add(Tmp);
 		}
 	}
