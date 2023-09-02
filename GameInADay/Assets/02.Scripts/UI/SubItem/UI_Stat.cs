@@ -34,6 +34,6 @@ public class UI_Stat : UI_Base
     public void SetStat(HumanStat stat)
     {
         current.text = $"{stat.Current}";
-        potential.text = $"{stat.Poten}";
+        potential.text = $"[{stat.Poten}]";
     }
 }
