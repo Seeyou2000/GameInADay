@@ -4,7 +4,7 @@ using UnityEngine;
 using System;
 public partial class ModelStaffInfo : CSVFile<ModelStaffInfo> { 
 	
-	public String Staff { get; set; }
+	public string Staff { get; set; }
 	
 	public bool IsFire { get; set; }
 	
