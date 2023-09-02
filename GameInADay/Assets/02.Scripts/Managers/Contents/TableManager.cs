@@ -17,4 +17,9 @@ public partial class TableManager
 			IsLoaded = true;
 		}
 	}
+
+	public void Init()
+	{
+		Load();
+	}
 }

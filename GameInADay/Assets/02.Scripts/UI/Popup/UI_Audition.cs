@@ -74,7 +74,6 @@ public class UI_Audition : UI_Popup
 
     public void ShowIdol()
     {
-        TableManager.Load();
         var idol = ModelIdol.GenerateIdol("LocalAudition");
         name.text = idol.Name;
         foreach (var i in System.Enum.GetValues(typeof(IdolStatType)))

@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Managers : MonoBehaviour
@@ -11,8 +12,10 @@ public class Managers : MonoBehaviour
 
 	private CoroutineManager _coroutine = new CoroutineManager();
 	private GameManager _game = new GameManager();
+	private TableManager _table = new TableManager();
 	public static CoroutineManager Coroutine { get { return Instance._coroutine;  } }
 	public static GameManager Game { get { return Instance._game;  } }
+	public static TableManager Table { get { return Instance._table;  } }
 
 	#endregion
 
@@ -61,6 +64,7 @@ public class Managers : MonoBehaviour
             s_instance._sound.Init();
             s_instance._coroutine.Init();
             s_instance._game.Init();
+            s_instance._table.Init();
         }		
 	}
 
