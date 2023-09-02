@@ -1,0 +1,5 @@
+ID,AuditionType,NormalAppearProb,SilverAppearProb,GoldAppearProb,PlatinumAppearProb,GuaranteedSilver,GuaranteedGold,Money
+int,string,float,float,float,float,int,int,int
+1,LocalAudition,94.6,5,0.5,0.1,0,0,1000000
+2,WideAreaAudition,85.5,10,4,0.5,1,0,10000000
+3,NationalAudition,76,15,8,1,0,1,100000000
