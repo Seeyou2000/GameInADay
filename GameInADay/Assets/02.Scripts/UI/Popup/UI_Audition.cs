@@ -9,7 +9,6 @@ public class UI_Audition : UI_Popup
     private enum Buttons
     {
         FinishBtn,
-        RedoBtn,
         GatchaBtn,
         PassBtn
     }
@@ -21,13 +20,14 @@ public class UI_Audition : UI_Popup
     
     enum GameObjects
     {
-        StatGrid,
+        StatGrid, CardGrid
     }
 
     private const int StatMax = 8;
     private UI_Stat[] stats;
-    public GameObject statGrid;
-    public Button finishBtn,redoBtn, passBtn;
+    public UI_IdolCard[] cards;
+    public GameObject statGrid, cardGrid;
+    public Button finishBtn, passBtn;
     public TextMeshProUGUI name, age, passBtnText;
     private Dictionary<int, string> IntToName = new(){{0,"귀여움"}, {1,"쿨"}, {2,"섹시"}, {3,"아름다움"}, {4,"보컬"}, {5,"댄스"}, {6,"유머"}, {7,"지성"}};
 
@@ -40,6 +40,13 @@ public class UI_Audition : UI_Popup
         Bind<TextMeshProUGUI>(typeof(Texts));
 
         statGrid = GetObject((int)GameObjects.StatGrid);
+        cardGrid = GetObject((int)GameObjects.CardGrid);
+        finishBtn = GetButton((int)Buttons.FinishBtn);
+        passBtn = GetButton((int)Buttons.PassBtn);
+        name = GetTextMeshPro((int)Texts.Name);
+        age = GetTextMeshPro((int)Texts.Age);
+        passBtnText = GetTextMeshPro((int)Texts.PassBtnText);
+        
         var statsLength = System.Enum.GetValues(typeof(IdolStatType)).Length;
         stats = new UI_Stat[statsLength];
         for (var i = 0; i < statsLength; i++)
@@ -48,24 +55,27 @@ public class UI_Audition : UI_Popup
             stats[i].Init();
             stats[i].name.text = IntToName[i];
         }
+
+
+        cards = new UI_IdolCard[5];
+        for (var i = 0; i < 5; i++)
+        {
+            cards[i] = Managers.UI.MakeSubItem<UI_IdolCard>(parent: cardGrid.transform);
+            cards[i].Init();
+        }
         
-        finishBtn = GetButton((int)Buttons.FinishBtn);
-        redoBtn = GetButton((int)Buttons.RedoBtn);
-        passBtn = GetButton((int)Buttons.PassBtn);
-        name = GetTextMeshPro((int)Texts.Name);
-        age = GetTextMeshPro((int)Texts.Age);
-        passBtnText = GetTextMeshPro((int)Texts.PassBtnText);
-        GetButton((int)Buttons.GatchaBtn).onClick.AddListener(Gatcha);
+        GetButton((int)Buttons.GatchaBtn).onClick.AddListener(ShowIdol);
 
         passBtnText.color = Color.clear;
         passBtn.gameObject.BindEvent((evt) => { passBtnText.color = Color.black; },Define.UIEvent.PointerEnter);
         passBtn.gameObject.BindEvent((evt) => { passBtnText.color = Color.clear; },Define.UIEvent.PointerExit);
+        finishBtn.onClick.AddListener(Managers.UI.ClosePopupUI);
     }
 
-    public void Gatcha()
+    public void ShowIdol()
     {
         TableManager.Load();
-        var idol = ModelIdol.GenerateIdol();
+        var idol = ModelIdol.GenerateIdol("LocalAudition");
         name.text = idol.Name;
         foreach (var i in System.Enum.GetValues(typeof(IdolStatType)))
         {

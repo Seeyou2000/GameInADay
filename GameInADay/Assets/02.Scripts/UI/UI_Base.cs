@@ -13,8 +13,13 @@ public abstract class UI_Base : MonoBehaviour
 
 	private void Start()
 	{
-		if(_objects.Count == 0)
+		if(!IsBinded())
 			Init();
+	}
+
+	protected bool IsBinded()
+	{
+		return _objects.Count != 0;
 	}
 
 	protected void Bind<T>(Type type) where T : UnityEngine.Object

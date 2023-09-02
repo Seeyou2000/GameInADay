@@ -360,7 +360,7 @@ GameObject:
   - component: {fileID: 8923489478268382149}
   - component: {fileID: 7498426658187491334}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -1,38 +1,28 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class GameScene : BaseScene
 {
-    private UI_ProducerName _producerNameUI;
-    private UI_Audition _auditionUI;
+    private UI_Game _uiGame;
+    private IdolStat[] _idolStats;
     
     protected override void Init()
     {
         base.Init();
 
         SceneType = Define.Scene.Game;
-
-        // TODO: 원래 바로 오디션으로 가지 않기에 임시로 만든 순서
-        _producerNameUI = Managers.UI.ShowPopupUI<UI_ProducerName>();
-        _producerNameUI.Init();
         
-        _producerNameUI.nextBtn.onClick.AddListener(() => { Managers.UI.ClosePopupUI();
-            _auditionUI = Managers.UI.ShowPopupUI<UI_Audition>();
-            _auditionUI.Init();
-            _auditionUI.finishBtn.onClick.AddListener(() => { Managers.UI.ClosePopupUI();});
-            _auditionUI.redoBtn.onClick.AddListener(() =>
+        _uiGame = Managers.UI.ShowSceneUI<UI_Game>();
+        _uiGame.Init();
+        _uiGame.localAuditionBtn.onClick.AddListener(() =>
+        {
+            for (var idx = 0; idx < Define.MaxAuditionCount; idx++)
             {
-                Managers.UI.ClosePopupUI();
-                _producerNameUI = Managers.UI.ShowPopupUI<UI_ProducerName>();
-                _producerNameUI.nextBtn.onClick.AddListener(() =>
-                {
-                    Managers.UI.ClosePopupUI();
-                    _auditionUI = Managers.UI.ShowPopupUI<UI_Audition>();
-                });
-            });
+                // _uiGame.UIAudition.cards[idx].SetPoint(_idolStats[idx].Stats.Sum(x => x.Value.Current) / 8);
+            }
         });
-        _producerNameUI.redoBtn.onClick.AddListener(() => { Managers.Scene.LoadScene(Define.Scene.Lobby);});
     }
 
     public override void Clear()

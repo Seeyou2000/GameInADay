@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Define
 {
+    public const int MaxAuditionCount = 5;
     public enum Scene
     {
         Unknown,
