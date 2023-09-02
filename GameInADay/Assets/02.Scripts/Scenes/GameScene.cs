@@ -4,24 +4,34 @@ using UnityEngine;
 
 public class GameScene : BaseScene
 {
+    private UI_ProducerName _producerNameUI;
+    private UI_Audition _auditionUI;
     protected override void Init()
     {
         base.Init();
 
         SceneType = Define.Scene.Game;
 
-        var ui = Managers.UI.ShowPopupUI<UI_ProducerName>();
-        //Managers.UI.ShowSceneUI<UI_Inven>();
-        //Dictionary<int, Data.Stat> dict = Managers.Data.StatDict;
-        //gameObject.GetOrAddComponent<CursorController>();
-
-        //GameObject player = Managers.Game.Spawn(Define.WorldObject.Player, "UnityChan");
-        //Camera.main.gameObject.GetOrAddComponent<CameraController>().SetPlayer(player);
-
-        ////Managers.Game.Spawn(Define.WorldObject.Monster, "Knight");
-        //GameObject go = new GameObject { name = "SpawningPool" };
-        //SpawningPool pool = go.GetOrAddComponent<SpawningPool>();
-        //pool.SetKeepMonsterCount(2);
+        // TODO: 원래 바로 오디션으로 가지 않기에 임시로 만든 순서
+        _producerNameUI = Managers.UI.ShowPopupUI<UI_ProducerName>();
+        _producerNameUI.Init();
+        
+        _producerNameUI.nextBtn.onClick.AddListener(() => { Managers.UI.ClosePopupUI();
+            _auditionUI = Managers.UI.ShowPopupUI<UI_Audition>();
+            _auditionUI.Init();
+            _auditionUI.nextBtn.onClick.AddListener(() => { Managers.UI.ClosePopupUI();});
+            _auditionUI.redoBtn.onClick.AddListener(() =>
+            {
+                Managers.UI.ClosePopupUI();
+                _producerNameUI = Managers.UI.ShowPopupUI<UI_ProducerName>();
+                _producerNameUI.nextBtn.onClick.AddListener(() =>
+                {
+                    Managers.UI.ClosePopupUI();
+                    _auditionUI = Managers.UI.ShowPopupUI<UI_Audition>();
+                });
+            });
+        });
+        _producerNameUI.redoBtn.onClick.AddListener(() => { Managers.Scene.LoadScene(Define.Scene.Lobby);});
     }
 
     public override void Clear()

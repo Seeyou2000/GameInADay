@@ -182,7 +182,7 @@ GameObject:
   - component: {fileID: 7708651867326600620}
   - component: {fileID: 4639828227370008571}
   m_Layer: 5
-  m_Name: Text
+  m_Name: Name
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -600,8 +600,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9009305757690261942}
+  - component: {fileID: 1607330499346828751}
   m_Layer: 5
-  m_Name: Stat
+  m_Name: UI_Stat
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -630,3 +631,15 @@ RectTransform:
   m_AnchoredPosition: {x: -334.77002, y: -89}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &1607330499346828751
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8485227341392375468}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c2fc1a4e46e57da49bc67e6a365888dd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

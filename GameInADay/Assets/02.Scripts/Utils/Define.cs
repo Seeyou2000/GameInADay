@@ -19,6 +19,11 @@ public class Define
         MaxCount,
     }
 
+    public enum Stats
+    {
+        Cute,Cool,Sexy,Beauty,Vocal,Dance,Humor,Intelligence
+    }
+
     public enum UIEvent
     {
         Click,

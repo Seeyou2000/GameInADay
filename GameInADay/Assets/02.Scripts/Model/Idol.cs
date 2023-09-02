@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
-public partial class ModelIdol : CSVFile<ModelIdol> { 
-	
+public partial class ModelIdol : CSVFile<ModelIdol> {
 	public string Grade { get; set; }
 	
 	public int CurMin { get; set; }
