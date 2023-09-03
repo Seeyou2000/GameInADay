@@ -2,14 +2,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.NetworkInformation;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class GameScene : BaseScene
 {
     private UI_Game _uiGame;
-    private List<IdolStat> _currentIdols;
-    private List<IdolStat> _tmpIdolStats;
 
     public long Money;
     public List<Staff> Staffs = new();
@@ -22,9 +21,7 @@ public class GameScene : BaseScene
         base.Init();
 
         SceneType = Define.Scene.Game;
-
-        _currentIdols = new List<IdolStat>();
-        _tmpIdolStats = new List<IdolStat>();
+        
         Simulator = new(this);
         
         _uiGame = Managers.UI.ShowSceneUI<UI_Game>();
@@ -78,6 +75,7 @@ public class GameScene : BaseScene
 
         _uiGame.SetMoney(Money);
         _uiGame.SetDate(Simulator.DateString, 0f);
+        
     }
 
     private void Update()
@@ -91,35 +89,35 @@ public class GameScene : BaseScene
             currentEventSystem.RaycastAll(eventData, raycastResults);
             Debug.Log(raycastResults[0]);
             
-            foreach(var c in _currentIdols)
+            foreach(var c in Managers.Game.CurrentIdols)
                 Debug.Log(c.Name);
         }
     }
 
     private void HavingAudition(string auditionType)
     {
-        _tmpIdolStats.Clear();
+        Managers.Game.TmpIdols.Clear();
         for(var i = 0; i < Define.MaxAuditionCount; i++)
-            _tmpIdolStats.Add(ModelIdol.GenerateIdol(auditionType));
+            Managers.Game.TmpIdols.Add(ModelIdol.GenerateIdol(auditionType));
         for (var idx = 0; idx < Define.MaxAuditionCount; idx++)
         {
-            var point = _tmpIdolStats[idx].Stats.Sum(x => x.Value.Current) / 8;
+            var point = Managers.Game.TmpIdols[idx].Stats.Sum(x => x.Value.Current) / 8;
             var tmpIdx = idx;
             
             _uiGame.UIAudition.cards[idx].SetPoint(point);
-            _uiGame.UIAudition.cards[idx].gameObject.BindEvent((evt) => { _uiGame.UIAudition.ShowIdol(tmpIdx, _tmpIdolStats[tmpIdx]);});
+            _uiGame.UIAudition.cards[idx].gameObject.BindEvent((evt) => { _uiGame.UIAudition.ShowIdol(tmpIdx, Managers.Game.TmpIdols[tmpIdx]);});
             _uiGame.UIAudition.cards[idx].passBtn.onClick.AddListener(() =>
             {
-                _currentIdols.Add(_tmpIdolStats[tmpIdx]);
+                Managers.Game.CurrentIdols.Add(Managers.Game.TmpIdols[tmpIdx]);
                 Managers.Resource.Destroy(_uiGame.UIAudition.cards[tmpIdx].gameObject);
                 if(tmpIdx == _uiGame.UIAudition.currendIdx)
                     _uiGame.UIAudition.ClosePane();
             });
         }
-        _uiGame.UIAudition.statPane.passBtn.onClick.AddListener(() =>
+        _uiGame.UIAudition.auditionStatPane.passBtn.onClick.AddListener(() =>
         {
             _uiGame.UIAudition.ClosePane();
-            _currentIdols.Add(_tmpIdolStats[_uiGame.UIAudition.currendIdx]);
+            Managers.Game.CurrentIdols.Add(Managers.Game.TmpIdols[_uiGame.UIAudition.currendIdx]);
             Managers.Resource.Destroy(_uiGame.UIAudition.cards[_uiGame.UIAudition.currendIdx].gameObject);
         });
     }
@@ -151,7 +149,8 @@ public class GameScene : BaseScene
 
     public override void Clear()
     {
-        _tmpIdolStats.Clear();
+        Managers.Game.CurrentIdols.Clear();
+        Managers.Game.TmpIdols.Clear();
     }
 
     void FixedUpdate() {

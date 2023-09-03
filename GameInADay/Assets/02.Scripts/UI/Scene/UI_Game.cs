@@ -27,6 +27,7 @@ public class UI_Game : UI_Scene
 
     public Button localAuditionBtn, wideAreaAuditionBtn, nationalAuditionBtn, PlayBtn, PauseBtn, PlayDoubleBtn, HireStaffBtn, StaffListBtn, FacilityListBtn;
     public UI_Audition UIAudition;
+    public UI_Song UISong;
     public UI_Facility UIFacility;
     public UI_MainTab UIMainTab = null;
     public TextMeshProUGUI MoneyText;
@@ -64,6 +65,11 @@ public class UI_Game : UI_Scene
         StaffListBtn.onClick.AddListener(ShowMainTab);
     }
 
+    public void ShowSong()
+    {
+        UISong =  Managers.UI.ShowPopupUI<UI_Song>();
+        UISong.Init();
+    }
     public void ShowAudition()
     {
         UIAudition = Managers.UI.ShowPopupUI<UI_Audition>();

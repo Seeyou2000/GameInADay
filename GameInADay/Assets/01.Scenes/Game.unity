@@ -152,6 +152,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e5a2a4ab56bf724faae15359b0ee526, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentEventSystem: {fileID: 0}
+  Money: 0
 --- !u!4 &722198254
 Transform:
   m_ObjectHideFlags: 0

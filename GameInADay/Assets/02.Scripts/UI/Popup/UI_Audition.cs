@@ -1,7 +1,4 @@
-using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class UI_Audition : UI_Popup
@@ -20,7 +17,7 @@ public class UI_Audition : UI_Popup
 
     public int currendIdx;
     public UI_IdolCard[] cards;
-    public UI_StatPane statPane;
+    public UI_AuditionStatPane auditionStatPane;
     public GameObject pane, cardGrid;
     public Button finishBtn;
 
@@ -35,9 +32,9 @@ public class UI_Audition : UI_Popup
         cardGrid = GetObject((int)GameObjects.CardGrid);
         pane = GetObject((int)GameObjects.Pane);
         finishBtn = GetButton((int)Buttons.FinishBtn);
-        statPane = Managers.UI.MakeSubItem<UI_StatPane>(parent: pane.transform );
-        statPane.Init();
-        statPane.transform.localPosition = Vector3.zero;
+        auditionStatPane = Managers.UI.MakeSubItem<UI_AuditionStatPane>(parent: pane.transform );
+        auditionStatPane.Init();
+        auditionStatPane.transform.localPosition = Vector3.zero;
 
         cards = new UI_IdolCard[Define.MaxAuditionCount];
         for (var i = 0; i < Define.MaxAuditionCount; i++)
@@ -54,18 +51,18 @@ public class UI_Audition : UI_Popup
     {
         currendIdx = idx;
         ShowPane();
-        statPane.SetIdol(idol);
+        auditionStatPane.SetIdol(idol);
     }
     
     public void ShowPane()
     {
         pane.SetActive(true);
-        statPane.passBtnText.color = Color.clear;
+        auditionStatPane.passBtnText.color = Color.clear;
     }
     
     public void ClosePane()
     {
         pane.SetActive(false);
-        statPane.passBtnText.color = Color.clear;
+        auditionStatPane.passBtnText.color = Color.clear;
     }
 }

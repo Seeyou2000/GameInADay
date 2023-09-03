@@ -87,7 +87,7 @@ GameObject:
   - component: {fileID: 4309935575636242410}
   - component: {fileID: 3586306852109980906}
   - component: {fileID: 8297766786091501020}
-  - component: {fileID: 6202416581940760562}
+  - component: {fileID: 5658540780448362699}
   m_Layer: 5
   m_Name: UI_Audition
   m_TagString: Untagged
@@ -181,7 +181,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &6202416581940760562
+--- !u!114 &5658540780448362699
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -193,8 +193,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c388d1edd6a0cae44a358161518f2a3a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currendIdx: 0
   cards: []
-  statPane: {fileID: 0}
+  auditionStatPane: {fileID: 0}
   pane: {fileID: 0}
   cardGrid: {fileID: 0}
   finishBtn: {fileID: 0}
